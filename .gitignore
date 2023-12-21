@@ -1,4 +1,5 @@
 logs/scheduler/latest
-config/
+config/config.ini/
+config/configApi.ini/
 logs/
 dags/_pycache_/
