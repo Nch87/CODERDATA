@@ -186,5 +186,37 @@ El código también define los DAGs llamados `dag_smtp_email_automatico_clima` y
 
 Estos DAGs están diseñados para monitorear la ejecución de los DAGs correspondientes y enviar un correo electrónico en caso de fallo.
 
+## DAG : dag_Temp
+
+Explicación del código:
+
+1. Establece las importaciones necesarias, incluyendo módulos de `Airflow`, `psycopg2` para la conexión a la base de datos `PostgreSQL`, y `smtplib` para enviar correos electrónicos.
+
+2. Define un diccionario con argumentos por defecto para el flujo de trabajo de `Airflow`, incluyendo el propietario, la fecha de inicio y la configuración de reintentos.
+
+3. Crea una función llamada `enviar_alerta_temperatura` que se encarga de realizar la consulta a la base de datos, procesar los resultados y enviar correos electrónicos si se cumple cierta condición.
+
+4. Define un flujo de trabajo de Airflow con un nombre (dag_id) y una programación para ejecutar la función `enviar_alerta_temperatura` cada 4 horas.
+
+5. Crea una tarea utilizando `PythonOperator` que ejecuta la función `enviar_alerta_temperatura` como parte del flujo de trabajo.
+
+Este flujo de trabajo utiliza la biblioteca `Airflow` para programar y ejecutar tareas, la biblioteca `psycopg2` para conectarse a una base de datos PostgreSQL, y la biblioteca `smtplib` para enviar correos electrónicos. El código se encarga de enviar alertas por correo electrónico si la temperatura actual en una ubicación específica supera los 30 grados Celsius.
+
+## DAG : dag_AlertaLluvias
+
+Explicación del código:
+
+1. Se importan los módulos necesarios, incluyendo `datetime`, `timedelta`, `DAG` y `PythonOperator de Airflow`, `psycopg2` para la conexión a la base de datos PostgreSQL, `smtplib` para enviar correos electrónicos, y ConfigParser para leer la configuración desde un archivo INI.
+
+2. Se define un diccionario con argumentos por defecto para el flujo de trabajo de Airflow, incluyendo el propietario, la fecha de inicio, y la configuración de reintentos.
+
+3. Se crea una función llamada `enviar_alerta_tormentas` que se encarga de realizar una consulta a la base de datos, procesar los resultados y enviar correos electrónicos si se cumple cierta condición.
+
+4. Se define un flujo de trabajo de Airflow con un nombre (dag_id), una programación para ejecutar la función `enviar_alerta_tormentas` a las 10:00 AM todos los días, y se establece `catchup` como falso para evitar la ejecución retroactiva de tareas.
+
+5. Se crea una tarea utilizando `PythonOperator` que ejecuta la función `enviar_alerta_tormentas` como parte del flujo de trabajo.
+
+Este flujo de trabajo utiliza la biblioteca Airflow para programar y ejecutar tareas, la biblioteca psycopg2 para conectarse a una base de datos PostgreSQL, y la biblioteca smtplib para enviar correos electrónicos. El código se encarga de enviar alertas por correo electrónico si hay altas probabilidades de tormentas en una ubicación específica.
+
 ## Conexion de Api
 - https://www.weatherapi.com/
