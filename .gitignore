@@ -1,2 +1,4 @@
 logs/scheduler/latest
 config/
+logs/
+dags/_pycache_/

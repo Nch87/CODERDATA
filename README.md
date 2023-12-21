@@ -176,6 +176,15 @@ En este caso, he utilizado Docker para crear un contenedor llamado `coderdata`, 
 
 Dentro del contenedor `oderdata`, he configurado y ejecutado los dos DAGs mencionados anteriormente, `dag_insert_clima` y `dag_insert_forecast_data`, utilizando la biblioteca Airflow. Estos DAGs se encargan de la inserción regular de datos climáticos actuales y de pronóstico en una base de datos.
 
+## DAG : dag_email
+
+La función `enviar_email` se encarga de enviar un correo electrónico utilizando el protocolo `SMTP`. Utiliza la librería `smtplib` para establecer una conexión segura con el servidor `SMTP` de Gmail, y luego envía un correo electrónico con un asunto y cuerpo específicos. Además, maneja excepciones mediante un bloque `try-except`, capturando cualquier error que ocurra durante el envío del correo electrónico e imprimiendo un mensaje de error junto con la excepción. En caso de éxito, se imprime un mensaje indicando que el correo se envió correctamente.
+
+La función `verificar_dag_clima` y `verificar_dag_forecast` verifica si los DAGs llamados `dag_insert_clima` y `dag_insert_forecast_data` se ejecutaron correctamente en los días correspondientes. Utiliza la sesión de `Airflow` para consultar las bases de datos y buscar los registros de ejecución de los DAGs dentro del rango de tiempo del día. Luego, imprime un mensaje indicando si el DAG se ejecutó correctamente o no.
+
+El código también define los DAGs llamados `dag_smtp_email_automatico_clima` y `dag_smtp_email_automatico_forecast`, que se ejecutan cada 4 horas y cada 4 días respectivamente. Cada uno de ellos tiene dos tareas: `verificar_dag_clima` y `verificar_dag_forecast`, las cuales ejecutan las funciones antes mencionadas, y la tarea `enviar_email`, que ejecuta la función `enviar_email`. Además, se especifica que la función `enviar_email` se utilizará como callback en caso de fallo.
+
+Estos DAGs están diseñados para monitorear la ejecución de los DAGs correspondientes y enviar un correo electrónico en caso de fallo.
 
 ## Conexion de Api
 - https://www.weatherapi.com/
